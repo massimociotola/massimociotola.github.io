@@ -18,7 +18,6 @@
         body, html {
             width: 100%;
             height: 100%;
-            /* Sfondo identico all'immagine allegata */
             background-color: #2b3846; 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: #ffffff;
@@ -102,8 +101,8 @@
             text-transform: uppercase;
             color: #ffffff;
             opacity: 0;
-            transform: translateY(20px);
-            filter: blur(5px);
+            transform: translateY(25px);
+            filter: blur(8px);
         }
 
         /* LINEA ROSSA MAN */
@@ -133,8 +132,9 @@
             letter-spacing: 0.5px;
             display: inline-block;
             opacity: 0;
-            transform: translateY(15px);
-            transition: color 0.2s, transform 0.2s;
+            transform: translateY(20px);
+            filter: blur(6px);
+            transition: color 0.3s, transform 0.2s;
             word-break: break-all;
         }
 
@@ -143,7 +143,7 @@
             transform: scale(0.98);
         }
 
-        /* SEZIONE AZIENDA FOOTER */
+        /* SEZIONE AZIENDA FOOTER (TESTO SEMPLICE NON CLICCABILE) */
         .company-info {
             text-align: center;
             font-size: 0.95rem;
@@ -151,6 +151,8 @@
             color: #ffffff;
             opacity: 0;
             transform: translateY(20px);
+            filter: blur(6px);
+            user-select: none; /* Impedisce la selezione/click accidentale */
         }
 
         .company-name {
@@ -160,17 +162,17 @@
         }
 
         /* ----------------------------------------------------
-           ANIMAZIONI IN SEQUENZA (DELAYS)
+           ANIMAZIONI PIÙ LENTE E MORBIDE (1.4 SECONDI)
         ---------------------------------------------------- */
         .animate-in {
-            animation: fadeInElement 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeInSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .animate-line {
-            animation: expandLine 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: expandLineSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes fadeInElement {
+        @keyframes fadeInSlow {
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -178,18 +180,19 @@
             }
         }
 
-        @keyframes expandLine {
+        @keyframes expandLineSlow {
             to {
                 opacity: 1;
                 transform: scaleX(1);
             }
         }
 
-        .delay-1 { animation-delay: 3.2s; } /* Nome */
+        /* Tempi di attesa scaglionati */
+        .delay-1 { animation-delay: 3.1s; } /* Nome */
         .delay-2 { animation-delay: 3.5s; } /* Linea Rossa */
-        .delay-3 { animation-delay: 3.8s; } /* Email */
-        .delay-4 { animation-delay: 4.1s; } /* Telefono */
-        .delay-5 { animation-delay: 4.4s; } /* Azienda */
+        .delay-3 { animation-delay: 3.9s; } /* Email */
+        .delay-4 { animation-delay: 4.3s; } /* Telefono */
+        .delay-5 { animation-delay: 4.7s; } /* Azienda & P.IVA */
     </style>
 </head>
 
@@ -213,19 +216,19 @@
 
             <!-- Contatti Cliccabili -->
             <div class="contact-info">
-                <!-- Email (Apre la scrittura email) -->
+                <!-- Email (Apre programma di posta) -->
                 <a href="mailto:massimo.impromart@gmail.com" class="contact-link animate-in delay-3">
                     massimo.impromart@gmail.com
                 </a>
 
-                <!-- Telefono (Download file Contatto per Rubrica) -->
-                <a href="#" onclick="downloadVCard(event)" class="contact-link animate-in delay-4">
+                <!-- Telefono (Salva in Rubrica + Chiamata) -->
+                <a href="#" onclick="handlePhoneClick(event)" class="contact-link animate-in delay-4">
                     +39 334 604 4926
                 </a>
             </div>
         </div>
 
-        <!-- Dati Aziendali -->
+        <!-- Dati Aziendali (Testo Statico Non Cliccabile) -->
         <div class="company-info animate-in delay-5">
             <div class="company-name">Impromart SRL</div>
             Traversa Fossitelli snc<br>
@@ -235,15 +238,18 @@
     </div>
 
     <script>
-        // Nasconde il loader dell'intro dopo 3 secondi
+        // Nasconde l'intro dopo 3 secondi
         setTimeout(() => {
             const loader = document.getElementById("loader");
             if (loader) loader.classList.add("exit");
         }, 3000);
 
-        // Funzione per salvare il contatto in rubrica quando si tocca il numero di telefono
-        function downloadVCard(e) {
+        // Quando si tocca il numero di telefono:
+        // 1. Scarica la scheda contatto per la rubrica (.vcf)
+        // 2. Avvia la chiamata telefonica
+        function handlePhoneClick(e) {
             e.preventDefault();
+            
             const vcardData = 
 `BEGIN:VCARD
 VERSION:3.0
@@ -264,6 +270,11 @@ END:VCARD`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+
+            // Avvia la chiamata dopo un brevissimo istante dal download
+            setTimeout(() => {
+                window.location.href = "tel:+393346044926";
+            }, 300);
         }
     </script>
 </body>
