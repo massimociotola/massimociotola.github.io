@@ -25,7 +25,7 @@
         }
 
         /* ----------------------------------------------------
-           SCHERMATA INTRO CON LOGO "logo intro.png" (4 SECONDI)
+           SCHERMATA INTRO CON LOGO "logo intro.png" (3 SECONDI)
         ---------------------------------------------------- */
         #loader {
             position: fixed;
@@ -35,44 +35,43 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
+            pointer-events: auto;
         }
 
-        /* Immagine Logo Intro con Animazione di Entrata */
-        .intro-logo-img {
-            max-width: 70vw;
-            max-height: 50vh;
-            object-fit: contain;
-            opacity: 0;
-            transform: scale(0.6);
-            filter: blur(15px);
-            animation: logoZoomIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        /* Uscita con Zoom In e Sfocatura (dopo 4 sec) */
         #loader.exit {
-            opacity: 0;
-            filter: blur(20px);
             pointer-events: none;
         }
 
-        #loader.exit .intro-logo-img {
-            transform: scale(1.3);
-            filter: blur(15px);
-            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease, opacity 0.8s ease;
+        /* LOGO PIÙ PICCOLO + ANIMAZIONE LINEARE DI ZOOM E BLUR */
+        .intro-logo-img {
+            max-width: 50vw;  /* Ridotto per renderlo più piccolo */
+            max-height: 35vh;
+            object-fit: contain;
             opacity: 0;
+            transform: scale(0.85);
+            filter: blur(12px);
+            animation: continuousZoomFade 3s linear forwards;
         }
 
-        @keyframes logoZoomIn {
+        /* Animazione continua di 3 secondi: Zoom costante + Fade/Blur In + Fade/Blur Out finale */
+        @keyframes continuousZoomFade {
             0% {
                 opacity: 0;
-                transform: scale(0.6);
-                filter: blur(15px);
+                transform: scale(0.85);
+                filter: blur(12px);
+            }
+            25% {
+                opacity: 1;
+                filter: blur(0px);
+            }
+            75% {
+                opacity: 1;
+                filter: blur(0px);
             }
             100% {
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0px);
+                opacity: 0;
+                transform: scale(1.25); /* Continua ad ingrandirsi fino alla fine */
+                filter: blur(14px);
             }
         }
 
@@ -391,7 +390,7 @@
 
                 await renderSinglePage(1);
 
-                // GESTIONE INTRO 4 SECONDI
+                // GESTIONE INTRO 3 SECONDI PERFETTI CON L'ANIMAZIONE LINEARE
                 setTimeout(() => {
                     loader.classList.add("exit");
 
@@ -400,8 +399,8 @@
                         if (firstBox) firstBox.classList.add("animate-in");
                     }, 100);
 
-                    setTimeout(() => loader.remove(), 1000);
-                }, 4000);
+                    setTimeout(() => loader.remove(), 400);
+                }, 3000);
 
                 for (let i = 2; i <= totalPages; i++) {
                     await renderSinglePage(i);
