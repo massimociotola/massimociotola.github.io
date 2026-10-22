@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Massimo Ciotola - Portfolio</title>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Massimo Ciotola - MAN</title>
+    <!-- Font moderno e pulito -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -18,9 +18,14 @@
         body, html {
             width: 100%;
             height: 100%;
-            background: #000000;
+            /* Sfondo identico all'immagine allegata */
+            background-color: #2b3846; 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Inter", sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -40,24 +45,23 @@
 
         #loader.exit {
             pointer-events: none;
+            display: none;
         }
 
-        /* LOGO PIÙ PICCOLO + ANIMAZIONE LINEARE DI ZOOM E BLUR */
         .intro-logo-img {
-            max-width: 50vw;  /* Ridotto per renderlo più piccolo */
+            max-width: 50vw;
             max-height: 35vh;
             object-fit: contain;
             opacity: 0;
-            transform: scale(0.85);
+            transform: scale(0.92);
             filter: blur(12px);
             animation: continuousZoomFade 3s linear forwards;
         }
 
-        /* Animazione continua di 3 secondi: Zoom costante + Fade/Blur In + Fade/Blur Out finale */
         @keyframes continuousZoomFade {
             0% {
                 opacity: 0;
-                transform: scale(0.85);
+                transform: scale(0.92);
                 filter: blur(12px);
             }
             25% {
@@ -70,414 +74,229 @@
             }
             100% {
                 opacity: 0;
-                transform: scale(1.08); /* Continua ad ingrandirsi fino alla fine */
+                transform: scale(1.08);
                 filter: blur(14px);
             }
         }
 
         /* ----------------------------------------------------
-           SLIDER CONTAINER PDF
+           BIGLIETTO DA VISITA DIGITALE
         ---------------------------------------------------- */
-        #pdf-container {
+        .card {
+            width: 100%;
+            max-width: 380px;
+            padding: 40px 30px;
             display: flex;
-            width: 100vw;
-            height: 100vh;
-            background: #000000;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            will-change: transform;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 85vh;
+            box-sizing: border-box;
         }
 
-        .page-box {
-            position: relative;
-            flex: 0 0 100vw;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* ANIMAZIONE SCROLL + ZOOM + SFOCATURA PRIMA PAGINA */
-        .page-box:first-child .canvas-wrapper {
-            opacity: 0;
-            transform: translateY(140px) scale(1.12);
-            filter: blur(8px);
-            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        filter 1.2s ease;
-        }
-
-        .page-box:first-child.animate-in .canvas-wrapper {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-        }
-
-        .canvas-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.85);
-            border-radius: 4px;
-        }
-
-        canvas {
-            display: block;
-            border-radius: 4px;
-        }
-
-        /* STRATO LINK CLICCABILI */
-        .annotationLayer {
-            position: absolute;
-            inset: 0;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .annotationLayer a {
-            position: absolute;
-            pointer-events: auto;
-            background: rgba(255, 255, 255, 0);
-            cursor: pointer;
-        }
-
-        /* CONTROLLI UI */
-        .ui-btn {
-            position: fixed;
-            background: rgba(0, 0, 0, 0.35);
-            color: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: background 0.3s, border-color 0.3s, transform 0.2s, opacity 0.3s;
-            user-select: none;
-        }
-
-        .ui-btn:hover {
-            background: rgba(0, 0, 0, 0.65);
-            border-color: rgba(255, 255, 255, 0.5);
-            color: #ffffff;
-            transform: scale(1.08);
-        }
-
-        .nav-btn {
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-50%) scale(1.08);
-        }
-
-        .nav-btn.disabled {
-            opacity: 0.15;
-            cursor: default;
-            pointer-events: none;
-        }
-
-        #prev-btn { left: 25px; }
-        #next-btn { right: 25px; }
-
-        #fullscreen-btn {
-            top: 25px;
-            right: 25px;
-            width: 44px;
-            height: 44px;
-            font-size: 16px;
-        }
-
-        #page-counter {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.35);
-            color: rgba(255, 255, 255, 0.9);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        /* NOME E COGNOME */
+        .name-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.1;
             letter-spacing: 1.5px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-            pointer-events: none;
+            text-transform: uppercase;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(5px);
         }
 
-        /* RESPONSIVE SMARTPHONE */
-        @media (max-width: 768px) {
-            body, html {
-                overflow-x: hidden;
-                overflow-y: auto;
-            }
+        /* LINEA ROSSA MAN */
+        .red-line {
+            width: 180px;
+            height: 4px;
+            background-color: #e60000;
+            margin: 25px 0 35px 0;
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
 
-            #pdf-container {
-                display: block;
-                width: 100%;
-                height: auto;
-                transform: none !important;
-            }
+        /* SEZIONE CONTATTI */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
 
-            .page-box {
-                width: 100%;
-                height: auto;
-                padding: 0;
-                margin-bottom: 10px;
-            }
+        .contact-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: color 0.2s, transform 0.2s;
+            word-break: break-all;
+        }
 
-            .canvas-wrapper {
-                width: 100% !important;
-                height: auto !important;
-            }
+        .contact-link:active {
+            color: #e60000;
+            transform: scale(0.98);
+        }
 
-            canvas {
-                width: 100% !important;
-                height: auto !important;
-            }
+        /* BOTTONE SALVA IN RUBRICA */
+        .save-vcard-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #ffffff;
+            color: #2b3846;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 14px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(15px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: background 0.2s;
+        }
 
-            .ui-btn, #page-counter {
-                display: none;
+        .save-vcard-btn:active {
+            background-color: #e0e0e0;
+        }
+
+        /* SEZIONE AZIENDA FOOTER */
+        .company-info {
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .company-name {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        /* ----------------------------------------------------
+           ANIMAZIONI IN SEQUENZA (DELAYS)
+        ---------------------------------------------------- */
+        .animate-in {
+            animation: fadeInElement 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-line {
+            animation: expandLine 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInElement {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
             }
         }
+
+        @keyframes expandLine {
+            to {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+
+        .delay-1 { animation-delay: 3.2s; } /* Nome */
+        .delay-2 { animation-delay: 3.5s; } /* Linea Rossa */
+        .delay-3 { animation-delay: 3.8s; } /* Email */
+        .delay-4 { animation-delay: 4.1s; } /* Telefono */
+        .delay-5 { animation-delay: 4.4s; } /* Tasto Salva Rubrica */
+        .delay-6 { animation-delay: 4.7s; } /* Azienda */
     </style>
 </head>
 
 <body>
 
-    <!-- SCHERMATA INTRO LOGO -->
+    <!-- 1. INTRO LOGO (3 SECONDI) -->
     <div id="loader">
-        <img src="logo intro.png" alt="Logo" class="intro-logo-img" id="intro-img">
+        <img src="logo intro.png" alt="Logo" class="intro-logo-img">
     </div>
 
-    <button id="fullscreen-btn" class="ui-btn" title="Schermo Intero">&#x26F6;</button>
-    <button id="prev-btn" class="ui-btn nav-btn" aria-label="Pagina precedente">&#10094;</button>
-    <button id="next-btn" class="ui-btn nav-btn" aria-label="Pagina successiva">&#10095;</button>
-    <div id="page-counter">1 / --</div>
+    <!-- 2. CARD DIGITALE -->
+    <div class="card">
+        <div>
+            <!-- Nome e Cognome -->
+            <div class="name-title animate-in delay-1">
+                MASSIMO<br>CIOTOLA
+            </div>
 
-    <div id="pdf-container"></div>
+            <!-- Linea Rossa MAN -->
+            <div class="red-line animate-line delay-2"></div>
+
+            <!-- Contatti Cliccabili -->
+            <div class="contact-info">
+                <!-- Email -->
+                <a href="mailto:massimo.impromart@gmail.com" class="contact-link animate-in delay-3">
+                    massimo.impromart@gmail.com
+                </a>
+
+                <!-- Telefono -->
+                <a href="tel:+393346044926" class="contact-link animate-in delay-4">
+                    +39 334 604 4926
+                </a>
+
+                <!-- Pulsante Salva in Rubrica -->
+                <a href="#" onclick="downloadVCard(event)" class="save-vcard-btn animate-in delay-5">
+                    📇 Salva in Rubrica
+                </a>
+            </div>
+        </div>
+
+        <!-- Dati Aziendali -->
+        <div class="company-info animate-in delay-6">
+            <div class="company-name">Impromart SRL</div>
+            Traversa Fossitelli snc<br>
+            80147 - Napoli<br>
+            04911050633
+        </div>
+    </div>
 
     <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc =
-            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        // Nasconde il loader dell'intro dopo 3 secondi
+        setTimeout(() => {
+            const loader = document.getElementById("loader");
+            if (loader) loader.classList.add("exit");
+        }, 3000);
 
-        const container = document.getElementById("pdf-container");
-        const loader = document.getElementById("loader");
-        const prevBtn = document.getElementById("prev-btn");
-        const nextBtn = document.getElementById("next-btn");
-        const fullscreenBtn = document.getElementById("fullscreen-btn");
-        const pageCounter = document.getElementById("page-counter");
+        // Genera e fa scaricare il file .vcf per la rubrica del telefono
+        function downloadVCard(e) {
+            e.preventDefault();
+            const vcardData = 
+`BEGIN:VCARD
+VERSION:3.0
+N:Ciotola;Massimo;;;
+FN:Massimo Ciotola
+ORG:Impromart SRL
+TITLE:Venditore Camion & Veicoli Industriali
+TEL;TYPE=CELL:+393346044926
+EMAIL;TYPE=WORK:massimo.impromart@gmail.com
+ADR;TYPE=WORK:;;Traversa Fossitelli snc;Napoli;;80147;Italy
+END:VCARD`;
 
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-        
-        // UNICO FILE PDF
-        const pdfUrl = "massimo.pdf";
-
-        let currentPage = 1;
-        let totalPages = 0;
-        let loadedPdfDocument = null;
-
-        function updateNavigation() {
-            if (isMobile) return;
-            container.style.transform = `translateX(-${(currentPage - 1) * 100}vw)`;
-            pageCounter.textContent = `${currentPage} / ${totalPages}`;
-            prevBtn.classList.toggle("disabled", currentPage === 1);
-            nextBtn.classList.toggle("disabled", currentPage === totalPages);
+            const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.setAttribute('download', 'Massimo_Ciotola_MAN.vcf');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
-
-        async function renderSinglePage(pageNumber) {
-            const page = await loadedPdfDocument.getPage(pageNumber);
-            const unscaledViewport = page.getViewport({ scale: 1.0 });
-
-            let displayWidth, displayHeight;
-
-            if (isMobile) {
-                displayWidth = window.innerWidth;
-                displayHeight = (unscaledViewport.height / unscaledViewport.width) * displayWidth;
-            } else {
-                const maxW = window.innerWidth;
-                const maxH = window.innerHeight;
-                const fitScale = Math.min(maxW / unscaledViewport.width, maxH / unscaledViewport.height);
-
-                displayWidth = Math.floor(unscaledViewport.width * fitScale);
-                displayHeight = Math.floor(unscaledViewport.height * fitScale);
-            }
-
-            const wrapper = document.getElementById("wrapper-" + pageNumber);
-            wrapper.style.width = displayWidth + "px";
-            wrapper.style.height = displayHeight + "px";
-
-            const canvas = document.createElement("canvas");
-            const context = canvas.getContext("2d");
-
-            const dpr = Math.max(window.devicePixelRatio || 1, 2);
-            const renderScale = (displayWidth / unscaledViewport.width) * dpr;
-            const renderViewport = page.getViewport({ scale: renderScale });
-
-            canvas.width = renderViewport.width;
-            canvas.height = renderViewport.height;
-
-            canvas.style.width = displayWidth + "px";
-            canvas.style.height = displayHeight + "px";
-
-            wrapper.appendChild(canvas);
-
-            await page.render({
-                canvasContext: context,
-                viewport: renderViewport
-            }).promise;
-
-            const annotations = await page.getAnnotations();
-            if (annotations.length > 0) {
-                const layer = document.createElement("div");
-                layer.className = "annotationLayer";
-                wrapper.appendChild(layer);
-
-                annotations.forEach(annotation => {
-                    if (annotation.subtype === 'Link' && annotation.url) {
-                        const link = document.createElement('a');
-                        link.href = annotation.url;
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-
-                        const rect = unscaledViewport.convertToViewportRectangle(annotation.rect);
-                        const left = Math.min(rect[0], rect[2]);
-                        const top = Math.min(rect[1], rect[3]);
-                        const width = Math.abs(rect[0] - rect[2]);
-                        const height = Math.abs(rect[1] - rect[3]);
-
-                        link.style.left = (left / unscaledViewport.width * 100) + '%';
-                        link.style.top = ((unscaledViewport.height - top) / unscaledViewport.height * 100) + '%';
-                        link.style.width = (width / unscaledViewport.width * 100) + '%';
-                        link.style.height = (height / unscaledViewport.height * 100) + '%';
-
-                        layer.appendChild(link);
-                    }
-                });
-            }
-        }
-
-        async function initPDF() {
-            try {
-                loadedPdfDocument = await pdfjsLib.getDocument(pdfUrl).promise;
-                totalPages = loadedPdfDocument.numPages;
-                pageCounter.textContent = `1 / ${totalPages}`;
-
-                container.innerHTML = "";
-                for (let i = 1; i <= totalPages; i++) {
-                    const pageBox = document.createElement("div");
-                    pageBox.className = "page-box";
-                    pageBox.id = "page-box-" + i;
-
-                    const wrapper = document.createElement("div");
-                    wrapper.className = "canvas-wrapper";
-                    wrapper.id = "wrapper-" + i;
-
-                    pageBox.appendChild(wrapper);
-                    container.appendChild(pageBox);
-                }
-
-                await renderSinglePage(1);
-
-                // GESTIONE INTRO 3 SECONDI PERFETTI CON L'ANIMAZIONE LINEARE
-                setTimeout(() => {
-                    loader.classList.add("exit");
-
-                    const firstBox = document.getElementById("page-box-1");
-                    setTimeout(() => {
-                        if (firstBox) firstBox.classList.add("animate-in");
-                    }, 100);
-
-                    setTimeout(() => loader.remove(), 400);
-                }, 3000);
-
-                for (let i = 2; i <= totalPages; i++) {
-                    await renderSinglePage(i);
-                }
-
-            } catch (err) {
-                console.error("Errore caricamento PDF:", err);
-            }
-        }
-
-        initPDF();
-
-        function goToNextPage() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                updateNavigation();
-            }
-        }
-
-        function goToPrevPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                updateNavigation();
-            }
-        }
-
-        nextBtn.addEventListener("click", goToNextPage);
-        prevBtn.addEventListener("click", goToPrevPage);
-
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowRight" || e.key === " ") {
-                goToNextPage();
-            } else if (e.key === "ArrowLeft") {
-                goToPrevPage();
-            }
-        });
-
-        let isScrolling = false;
-        window.addEventListener("wheel", (e) => {
-            if (isMobile || isScrolling) return;
-
-            if (e.deltaY > 0) {
-                goToNextPage();
-            } else if (e.deltaY < 0) {
-                goToPrevPage();
-            }
-
-            isScrolling = true;
-            setTimeout(() => { isScrolling = false; }, 400);
-        });
-
-        fullscreenBtn.addEventListener("click", () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.log(`Errore Fullscreen: ${err.message}`);
-                });
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        });
-
-        let resizeTimeout;
-        window.addEventListener("resize", () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(async () => {
-                if (!isMobile && loadedPdfDocument) {
-                    for (let i = 1; i <= totalPages; i++) {
-                        const wrapper = document.getElementById("wrapper-" + i);
-                        if (wrapper) wrapper.innerHTML = "";
-                        await renderSinglePage(i);
-                    }
-                    updateNavigation();
-                }
-            }, 200);
-        });
     </script>
 </body>
 </html>
