@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Giovanni Menerella - Portfolio</title>
+    <title>Massimo Ciotola - Portfolio</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
@@ -24,7 +24,9 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* SCHERMATA INTRO NERA CON BARRA 4PX */
+        /* ----------------------------------------------------
+           SCHERMATA INTRO CON LOGO "logo intro" (4 SECONDI)
+        ---------------------------------------------------- */
         #loader {
             position: fixed;
             inset: 0;
@@ -33,37 +35,50 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.8s ease, filter 0.8s ease;
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
         }
 
+        /* Immagine Logo Intro con Animazione di Entrata */
+        .intro-logo-img {
+            max-width: 70vw;
+            max-height: 50vh;
+            object-fit: contain;
+            opacity: 0;
+            transform: scale(0.6);
+            filter: blur(15px);
+            animation: logoZoomIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Uscita con Zoom In e Sfocatura (dopo 4 sec) */
         #loader.exit {
             opacity: 0;
-            filter: blur(12px);
+            filter: blur(20px);
             pointer-events: none;
         }
 
-        .loader-bar-container {
-            width: 240px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 2px;
-            overflow: hidden;
+        #loader.exit .intro-logo-img {
+            transform: scale(1.3);
+            filter: blur(15px);
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease, opacity 0.8s ease;
+            opacity: 0;
         }
 
-        .loader-bar-fill {
-            width: 0%;
-            height: 100%;
-            background: #ffffff;
-            border-radius: 2px;
-            animation: fillProgress 3s linear forwards;
+        @keyframes logoZoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.6);
+                filter: blur(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
         }
 
-        @keyframes fillProgress {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        /* SLIDER CONTAINER DESKTOP */
+        /* ----------------------------------------------------
+           SLIDER CONTAINER PDF
+        ---------------------------------------------------- */
         #pdf-container {
             display: flex;
             width: 100vw;
@@ -128,7 +143,7 @@
             cursor: pointer;
         }
 
-        /* CONTROLLI UI DELICATI E SEMITRASPARENTI */
+        /* CONTROLLI UI */
         .ui-btn {
             position: fixed;
             background: rgba(0, 0, 0, 0.35);
@@ -242,10 +257,9 @@
 
 <body>
 
+    <!-- SCHERMATA INTRO LOGO -->
     <div id="loader">
-        <div class="loader-bar-container">
-            <div id="loader-bar-fill" class="loader-bar-fill"></div>
-        </div>
+        <img src="logo intro" alt="Logo" class="intro-logo-img" id="intro-img">
     </div>
 
     <button id="fullscreen-btn" class="ui-btn" title="Schermo Intero">&#x26F6;</button>
@@ -267,7 +281,9 @@
         const pageCounter = document.getElementById("page-counter");
 
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-        const pdfUrl = isMobile ? "mobile.pdf" : "desktop.pdf";
+        
+        // UNICO FILE PDF
+        const pdfUrl = "massimo.pdf";
 
         let currentPage = 1;
         let totalPages = 0;
@@ -375,6 +391,7 @@
 
                 await renderSinglePage(1);
 
+                // GESTIONE INTRO 4 SECONDI
                 setTimeout(() => {
                     loader.classList.add("exit");
 
@@ -383,15 +400,15 @@
                         if (firstBox) firstBox.classList.add("animate-in");
                     }, 100);
 
-                    setTimeout(() => loader.remove(), 800);
-                }, 3000);
+                    setTimeout(() => loader.remove(), 1000);
+                }, 4000);
 
                 for (let i = 2; i <= totalPages; i++) {
                     await renderSinglePage(i);
                 }
 
             } catch (err) {
-                console.error("Errore PDF:", err);
+                console.error("Errore caricamento PDF:", err);
             }
         }
 
