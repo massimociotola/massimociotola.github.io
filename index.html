@@ -131,9 +131,7 @@
             font-size: 1.05rem;
             font-weight: 500;
             letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: inline-block;
             opacity: 0;
             transform: translateY(15px);
             transition: color 0.2s, transform 0.2s;
@@ -143,30 +141,6 @@
         .contact-link:active {
             color: #e60000;
             transform: scale(0.98);
-        }
-
-        /* BOTTONE SALVA IN RUBRICA */
-        .save-vcard-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background-color: #ffffff;
-            color: #2b3846;
-            font-weight: 700;
-            font-size: 0.95rem;
-            padding: 14px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            margin-top: 10px;
-            opacity: 0;
-            transform: translateY(15px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: background 0.2s;
-        }
-
-        .save-vcard-btn:active {
-            background-color: #e0e0e0;
         }
 
         /* SEZIONE AZIENDA FOOTER */
@@ -215,8 +189,7 @@
         .delay-2 { animation-delay: 3.5s; } /* Linea Rossa */
         .delay-3 { animation-delay: 3.8s; } /* Email */
         .delay-4 { animation-delay: 4.1s; } /* Telefono */
-        .delay-5 { animation-delay: 4.4s; } /* Tasto Salva Rubrica */
-        .delay-6 { animation-delay: 4.7s; } /* Azienda */
+        .delay-5 { animation-delay: 4.4s; } /* Azienda */
     </style>
 </head>
 
@@ -240,25 +213,20 @@
 
             <!-- Contatti Cliccabili -->
             <div class="contact-info">
-                <!-- Email -->
+                <!-- Email (Apre la scrittura email) -->
                 <a href="mailto:massimo.impromart@gmail.com" class="contact-link animate-in delay-3">
                     massimo.impromart@gmail.com
                 </a>
 
-                <!-- Telefono -->
-                <a href="tel:+393346044926" class="contact-link animate-in delay-4">
+                <!-- Telefono (Download file Contatto per Rubrica) -->
+                <a href="#" onclick="downloadVCard(event)" class="contact-link animate-in delay-4">
                     +39 334 604 4926
-                </a>
-
-                <!-- Pulsante Salva in Rubrica -->
-                <a href="#" onclick="downloadVCard(event)" class="save-vcard-btn animate-in delay-5">
-                    📇 Salva in Rubrica
                 </a>
             </div>
         </div>
 
         <!-- Dati Aziendali -->
-        <div class="company-info animate-in delay-6">
+        <div class="company-info animate-in delay-5">
             <div class="company-name">Impromart SRL</div>
             Traversa Fossitelli snc<br>
             80147 - Napoli<br>
@@ -273,7 +241,7 @@
             if (loader) loader.classList.add("exit");
         }, 3000);
 
-        // Genera e fa scaricare il file .vcf per la rubrica del telefono
+        // Funzione per salvare il contatto in rubrica quando si tocca il numero di telefono
         function downloadVCard(e) {
             e.preventDefault();
             const vcardData = 
