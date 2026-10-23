@@ -13,7 +13,7 @@
 
     <title>Massimo Ciotola - MAN</title>
     <!-- Font moderno e pulito -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -23,7 +23,7 @@
         }
 
         html {
-            background-color: #000000; /* Assicura che le barre del browser su iPhone/Safari siano NERE */
+            background-color: #000000;
             width: 100%;
             height: 100%;
         }
@@ -73,24 +73,10 @@
         }
 
         @keyframes continuousZoomFade {
-            0% {
-                opacity: 0;
-                transform: scale(0.92);
-                filter: blur(12px);
-            }
-            30% {
-                opacity: 1;
-                filter: blur(0px);
-            }
-            70% {
-                opacity: 1;
-                filter: blur(0px);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(1.05);
-                filter: blur(10px);
-            }
+            0% { opacity: 0; transform: scale(0.92); filter: blur(12px); }
+            30% { opacity: 1; filter: blur(0px); }
+            70% { opacity: 1; filter: blur(0px); }
+            100% { opacity: 0; transform: scale(1.05); filter: blur(10px); }
         }
 
         /* ----------------------------------------------------
@@ -100,16 +86,19 @@
             width: 90%;
             max-width: 380px;
             height: 85vh;
-            padding: 40px 30px;
+            max-height: 700px;
+            padding: 35px 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center; /* CENTRATURA ORIZZONTALE */
+            text-align: center;   /* TESTO CENTRATO */
             box-sizing: border-box;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
+            border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             opacity: 0;
             animation: fadeInCard 1.2s ease forwards 2.8s;
@@ -119,12 +108,19 @@
             to { opacity: 1; }
         }
 
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
         /* NOME E COGNOME */
         .name-title {
-            font-size: 2.2rem;
+            font-size: 2.1rem;
             font-weight: 800;
             line-height: 1.1;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             color: #ffffff;
             opacity: 0;
@@ -132,71 +128,106 @@
             filter: blur(12px);
         }
 
-        /* LINEA ROSSA MAN */
-        .red-line {
-            width: 180px;
-            height: 4px;
-            background-color: #e60000;
-            margin: 25px 0 35px 0;
+        /* RUOLO PROFESSIONALE */
+        .job-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 10px;
             opacity: 0;
-            transform: scaleX(0);
-            transform-origin: left;
-            box-shadow: 0 0 10px rgba(230, 0, 0, 0.4);
+            transform: translateY(25px);
+            filter: blur(12px);
         }
 
-        /* CONTATTI */
+        /* LINEA ROSSA MAN */
+        .red-line {
+            width: 120px;
+            height: 4px;
+            background-color: #e60000;
+            margin: 20px auto;
+            border-radius: 2px;
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: center;
+            box-shadow: 0 0 12px rgba(230, 0, 0, 0.5);
+        }
+
+        /* CONTATTI (PULSANTI/STILE SCHEDA) */
         .contact-info {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-bottom: 40px;
+            gap: 12px;
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .contact-link {
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 12px 16px;
             color: #ffffff;
             text-decoration: none;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            letter-spacing: 0.5px;
-            display: inline-block;
+            letter-spacing: 0.3px;
             opacity: 0;
             transform: translateY(25px);
             filter: blur(10px);
-            transition: color 0.3s, transform 0.2s;
-            word-break: break-all;
+            transition: all 0.2s ease;
+            cursor: pointer;
         }
 
-        .contact-link:active {
-            color: #e60000;
+        .btn-action:active {
+            background: rgba(230, 0, 0, 0.2);
+            border-color: #e60000;
             transform: scale(0.98);
+        }
+
+        .btn-vcard {
+            background: rgba(230, 0, 0, 0.15);
+            border: 1px solid rgba(230, 0, 0, 0.4);
+            font-weight: 600;
+        }
+
+        .btn-icon {
+            font-size: 1.1rem;
         }
 
         /* AZIENDA & PARTITA IVA */
         .company-info {
             text-align: center;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #ffffff;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.8);
             opacity: 0;
             transform: translateY(25px);
             filter: blur(10px);
             user-select: none;
+            width: 100%;
         }
 
         .company-name {
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 4px;
             color: #ffffff;
         }
 
         .piva-text {
-            color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
+            color: rgba(255, 255, 255, 0.6) !important;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
             text-decoration: none !important;
+            font-size: 0.85rem;
             font-weight: 500;
             display: block;
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         /* ----------------------------------------------------
@@ -235,11 +266,13 @@
         }
 
         /* TEMPI DI APPARIZIONE */
-        .delay-1 { animation-delay: 3.8s; } /* Nome (compare dopo lo sfondo) */
-        .delay-2 { animation-delay: 4.5s; } /* Linea Rossa */
-        .delay-3 { animation-delay: 5.2s; } /* Email */
-        .delay-4 { animation-delay: 5.9s; } /* Telefono */
-        .delay-5 { animation-delay: 6.6s; } /* Azienda e P.IVA */
+        .delay-1 { animation-delay: 3.8s; } /* Nome */
+        .delay-2 { animation-delay: 4.2s; } /* Ruolo */
+        .delay-3 { animation-delay: 4.6s; } /* Linea Rossa */
+        .delay-4 { animation-delay: 5.0s; } /* Email */
+        .delay-5 { animation-delay: 5.4s; } /* Telefono */
+        .delay-6 { animation-delay: 5.8s; } /* Salva Contatto */
+        .delay-7 { animation-delay: 6.2s; } /* Azienda */
     </style>
 </head>
 
@@ -252,34 +285,41 @@
 
     <!-- CARD DIGITALE -->
     <div class="card">
-        <div>
+        <div class="header-content">
             <!-- Nome e Cognome -->
             <div class="name-title animate-in delay-1">
                 MASSIMO<br>CIOTOLA
             </div>
 
+            <!-- Ruolo Professionale -->
+            <div class="job-title animate-in delay-2">
+                Vendita Veicoli Industriali
+            </div>
+
             <!-- Linea Rossa MAN -->
-            <div class="red-line animate-line delay-2"></div>
+            <div class="red-line animate-line delay-3"></div>
 
             <!-- Contatti -->
             <div class="contact-info">
-                <a href="mailto:massimo.impromart@gmail.com" class="contact-link animate-in delay-3">
-                    massimo.impromart@gmail.com
+                <a href="mailto:massimo.impromart@gmail.com" class="btn-action animate-in delay-4">
+                    <span class="btn-icon">✉️</span> massimo.impromart@gmail.com
                 </a>
 
-                <a href="#" onclick="handlePhoneClick(event)" class="contact-link animate-in delay-4">
-                    +39 334 604 4926
+                <a href="tel:+393346044926" class="btn-action animate-in delay-5">
+                    <span class="btn-icon">📞</span> +39 334 604 4926
                 </a>
+
+                <button onclick="downloadVCard()" class="btn-action btn-vcard animate-in delay-6">
+                    <span class="btn-icon">🎴</span> Salva in Rubrica
+                </button>
             </div>
         </div>
 
         <!-- Dati Aziendali -->
-        <div class="company-info animate-in delay-5">
+        <div class="company-info animate-in delay-7">
             <div class="company-name">Impromart SRL</div>
-            Traversa Fossitelli snc<br>
-            80147 - Napoli<br>
-            <!-- Carattere invisibile inserito nella P.IVA per bloccare il link blu su iOS -->
-            <span class="piva-text">04911&#8203;050633</span>
+            Traversa Fossitelli snc &bull; 80147 Napoli<br>
+            <span class="piva-text">P.IVA: 04911&#8203;050633</span>
         </div>
     </div>
 
@@ -293,17 +333,15 @@
             }
         }, 2800);
 
-        // Gestione Salva Contatto + Chiamata
-        function handlePhoneClick(e) {
-            e.preventDefault();
-            
+        // Funzione dedicata solo al salvataggio della vCard
+        function downloadVCard() {
             const vcardData = 
 `BEGIN:VCARD
 VERSION:3.0
 N:Ciotola;Massimo;;;
 FN:Massimo Ciotola
 ORG:Impromart SRL
-TITLE:Venditore Camion & Veicoli Industriali
+TITLE:Venditore Veicoli Industriali
 TEL;TYPE=CELL:+393346044926
 EMAIL;TYPE=WORK:massimo.impromart@gmail.com
 ADR;TYPE=WORK:;;Traversa Fossitelli snc;Napoli;;80147;Italy
@@ -317,10 +355,6 @@ END:VCARD`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-
-            setTimeout(() => {
-                window.location.href = "tel:+393346044926";
-            }, 300);
         }
     </script>
 </body>
