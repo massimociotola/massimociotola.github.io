@@ -3,16 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- COLORE DELLE BARRE DEL BROWSER (NERO) -->
-    <meta name="theme-color" content="#000000">
+    <!-- COLORE DELLE BARRE DEL BROWSER -->
+    <meta name="theme-color" content="#1e2732">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <!-- IMPEDISCE AD IPHONE DI TRASFORMARE I NUMERI IN LINK BLU -->
     <meta name="format-detection" content="telephone=no">
-    
+
     <title>Massimo Ciotola - MAN</title>
     <!-- Font moderno e pulito -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -24,15 +22,10 @@
             padding: 0;
         }
 
-        /* ----------------------------------------------------
-           FULLSCREEN & SFONDO
-        ---------------------------------------------------- */
         html, body {
             width: 100%;
             height: 100%;
-            min-height: 100vh;
-            min-height: 100dvh;
-            background: #000000; /* Fondo base nero per le zone di sicurezza/barre */
+            background: radial-gradient(circle at center, #3a4b5d 0%, #1e2732 100%);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: #ffffff;
             display: flex;
@@ -42,34 +35,18 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Sfondo a gradiente applicato al contenitore prinicipale */
-        .page-wrapper {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            background: radial-gradient(circle at center, #3a4b5d 0%, #1e2732 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
         /* ----------------------------------------------------
-           SCHERMATA INTRO LOGO (2.8 SECONDI)
+           1. SCHERMATA INTRO LOGO (3 SECONDI)
         ---------------------------------------------------- */
         #loader {
             position: fixed;
             inset: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
             background: #000000;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 1.2s ease;
+            transition: opacity 1s ease;
         }
 
         #loader.hidden {
@@ -109,13 +86,12 @@
         }
 
         /* ----------------------------------------------------
-           BIGLIETTO DA VISITA DIGITALE (CARD)
+           2. BIGLIETTO DA VISITA DIGITALE
         ---------------------------------------------------- */
         .card {
             width: 90%;
             max-width: 380px;
             height: 85vh;
-            height: 85dvh;
             padding: 40px 30px;
             display: flex;
             flex-direction: column;
@@ -128,13 +104,11 @@
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             opacity: 0;
-            animation: fadeInCard 1.5s cubic-bezier(0.1, 1, 0.2, 1) 2.8s forwards;
+            animation: fadeInCard 1.2s ease forwards 2.8s;
         }
 
         @keyframes fadeInCard {
-            to {
-                opacity: 1;
-            }
+            to { opacity: 1; }
         }
 
         /* NOME E COGNOME */
@@ -162,7 +136,7 @@
             box-shadow: 0 0 10px rgba(230, 0, 0, 0.4);
         }
 
-        /* SEZIONE CONTATTI */
+        /* CONTATTI */
         .contact-info {
             display: flex;
             flex-direction: column;
@@ -189,7 +163,7 @@
             transform: scale(0.98);
         }
 
-        /* SEZIONE AZIENDA FOOTER */
+        /* AZIENDA & PARTITA IVA */
         .company-info {
             text-align: center;
             font-size: 0.95rem;
@@ -208,28 +182,24 @@
             color: #ffffff;
         }
 
-        /* BLOCCO LINK E COLORI IPHONE SULLA PARTITA IVA */
-        .piva-text, 
-        .piva-text a {
+        .piva-text {
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
             text-decoration: none !important;
-            pointer-events: none !important;
             font-weight: 500;
             display: block;
             margin-top: 2px;
-            user-select: none;
         }
 
         /* ----------------------------------------------------
-           ANIMAZIONI MOLTO PIÙ LENTE (3.5 SECONDI)
+           ANIMAZIONI LENTE
         ---------------------------------------------------- */
         .animate-in {
-            animation: fadeInVerySlow 3.5s cubic-bezier(0.1, 1, 0.2, 1) forwards;
+            animation: fadeInVerySlow 3.2s cubic-bezier(0.1, 1, 0.2, 1) forwards;
         }
 
         .animate-line {
-            animation: expandLineVerySlow 3.5s cubic-bezier(0.1, 1, 0.2, 1) forwards;
+            animation: expandLineVerySlow 3.2s cubic-bezier(0.1, 1, 0.2, 1) forwards;
         }
 
         @keyframes fadeInVerySlow {
@@ -256,4 +226,94 @@
             }
         }
 
-        /* RITARDI
+        /* TEMPI DI APPARIZIONE */
+        .delay-1 { animation-delay: 3.8s; } /* Nome (compare dopo lo sfondo) */
+        .delay-2 { animation-delay: 4.5s; } /* Linea Rossa */
+        .delay-3 { animation-delay: 5.2s; } /* Email */
+        .delay-4 { animation-delay: 5.9s; } /* Telefono */
+        .delay-5 { animation-delay: 6.6s; } /* Azienda e P.IVA */
+    </style>
+</head>
+
+<body>
+
+    <!-- INTRO LOGO -->
+    <div id="loader">
+        <img src="logo intro.png" alt="Logo" class="intro-logo-img">
+    </div>
+
+    <!-- CARD DIGITALE -->
+    <div class="card">
+        <div>
+            <!-- Nome e Cognome -->
+            <div class="name-title animate-in delay-1">
+                MASSIMO<br>CIOTOLA
+            </div>
+
+            <!-- Linea Rossa MAN -->
+            <div class="red-line animate-line delay-2"></div>
+
+            <!-- Contatti -->
+            <div class="contact-info">
+                <a href="mailto:massimo.impromart@gmail.com" class="contact-link animate-in delay-3">
+                    massimo.impromart@gmail.com
+                </a>
+
+                <a href="#" onclick="handlePhoneClick(event)" class="contact-link animate-in delay-4">
+                    +39 334 604 4926
+                </a>
+            </div>
+        </div>
+
+        <!-- Dati Aziendali -->
+        <div class="company-info animate-in delay-5">
+            <div class="company-name">Impromart SRL</div>
+            Traversa Fossitelli snc<br>
+            80147 - Napoli<br>
+            <!-- Carattere invisibile inserito nella P.IVA per bloccare il link blu su iOS -->
+            <span class="piva-text">04911&#8203;050633</span>
+        </div>
+    </div>
+
+    <script>
+        // Nasconde l'intro e sblocca la pagina dopo 2.8s
+        setTimeout(() => {
+            const loader = document.getElementById("loader");
+            if (loader) {
+                loader.classList.add("hidden");
+                setTimeout(() => loader.style.display = 'none', 1000);
+            }
+        }, 2800);
+
+        // Gestione Salva Contatto + Chiamata
+        function handlePhoneClick(e) {
+            e.preventDefault();
+            
+            const vcardData = 
+`BEGIN:VCARD
+VERSION:3.0
+N:Ciotola;Massimo;;;
+FN:Massimo Ciotola
+ORG:Impromart SRL
+TITLE:Venditore Camion & Veicoli Industriali
+TEL;TYPE=CELL:+393346044926
+EMAIL;TYPE=WORK:massimo.impromart@gmail.com
+ADR;TYPE=WORK:;;Traversa Fossitelli snc;Napoli;;80147;Italy
+END:VCARD`;
+
+            const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.setAttribute('download', 'Massimo_Ciotola_MAN.vcf');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            setTimeout(() => {
+                window.location.href = "tel:+393346044926";
+            }, 300);
+        }
+    </script>
+</body>
+</html>
