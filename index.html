@@ -86,13 +86,13 @@
             width: 90%;
             max-width: 380px;
             height: 85vh;
-            max-height: 700px;
-            padding: 35px 24px;
+            max-height: 720px;
+            padding: 45px 28px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: center; /* CENTRATURA ORIZZONTALE */
-            text-align: center;   /* TESTO CENTRATO */
+            justify-content: space-between; /* Distribuisce lo spazio equamente */
+            align-items: center;
+            text-align: center;
             box-sizing: border-box;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
@@ -117,10 +117,10 @@
 
         /* NOME E COGNOME */
         .name-title {
-            font-size: 2.1rem;
+            font-size: 2.2rem;
             font-weight: 800;
             line-height: 1.1;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             color: #ffffff;
             opacity: 0;
@@ -132,10 +132,10 @@
         .job-title {
             font-size: 0.85rem;
             font-weight: 600;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.8px;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.7);
-            margin-top: 10px;
+            margin-top: 12px;
             opacity: 0;
             transform: translateY(25px);
             filter: blur(12px);
@@ -143,10 +143,10 @@
 
         /* LINEA ROSSA MAN */
         .red-line {
-            width: 120px;
+            width: 140px;
             height: 4px;
             background-color: #e60000;
-            margin: 20px auto;
+            margin: 28px auto 36px auto;
             border-radius: 2px;
             opacity: 0;
             transform: scaleX(0);
@@ -154,24 +154,23 @@
             box-shadow: 0 0 12px rgba(230, 0, 0, 0.5);
         }
 
-        /* CONTATTI (PULSANTI/STILE SCHEDA) */
+        /* CONTATTI (PULSANTI/SCHEDE) */
         .contact-info {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
             width: 100%;
-            margin-top: 10px;
         }
 
         .btn-action {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.06);
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
-            padding: 12px 16px;
+            border-radius: 14px;
+            padding: 16px;
             color: #ffffff;
             text-decoration: none;
             font-size: 0.95rem;
@@ -190,34 +189,34 @@
             transform: scale(0.98);
         }
 
-        .btn-vcard {
-            background: rgba(230, 0, 0, 0.15);
-            border: 1px solid rgba(230, 0, 0, 0.4);
-            font-weight: 600;
-        }
-
-        .btn-icon {
-            font-size: 1.1rem;
+        /* ICONE VETTORIALI BIANCHE */
+        .svg-icon {
+            width: 18px;
+            height: 18px;
+            fill: #ffffff;
+            flex-shrink: 0;
         }
 
         /* AZIENDA & PARTITA IVA */
         .company-info {
             text-align: center;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            font-size: 0.95rem;
+            line-height: 1.6;
             color: rgba(255, 255, 255, 0.8);
             opacity: 0;
             transform: translateY(25px);
             filter: blur(10px);
             user-select: none;
             width: 100%;
+            margin-top: 20px;
         }
 
         .company-name {
             font-weight: 800;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             margin-bottom: 4px;
             color: #ffffff;
+            letter-spacing: 0.5px;
         }
 
         .piva-text {
@@ -267,12 +266,11 @@
 
         /* TEMPI DI APPARIZIONE */
         .delay-1 { animation-delay: 3.8s; } /* Nome */
-        .delay-2 { animation-delay: 4.2s; } /* Ruolo */
-        .delay-3 { animation-delay: 4.6s; } /* Linea Rossa */
-        .delay-4 { animation-delay: 5.0s; } /* Email */
-        .delay-5 { animation-delay: 5.4s; } /* Telefono */
-        .delay-6 { animation-delay: 5.8s; } /* Salva Contatto */
-        .delay-7 { animation-delay: 6.2s; } /* Azienda */
+        .delay-2 { animation-delay: 4.3s; } /* Ruolo */
+        .delay-3 { animation-delay: 4.8s; } /* Linea Rossa */
+        .delay-4 { animation-delay: 5.3s; } /* Email */
+        .delay-5 { animation-delay: 5.8s; } /* Telefono */
+        .delay-6 { animation-delay: 6.3s; } /* Azienda */
     </style>
 </head>
 
@@ -301,22 +299,26 @@
 
             <!-- Contatti -->
             <div class="contact-info">
+                <!-- EMAIL CON ICONA SVG BIANCA -->
                 <a href="mailto:massimo.impromart@gmail.com" class="btn-action animate-in delay-4">
-                    <span class="btn-icon">✉️</span> massimo.impromart@gmail.com
+                    <svg class="svg-icon" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    massimo.impromart@gmail.com
                 </a>
 
-                <a href="tel:+393346044926" class="btn-action animate-in delay-5">
-                    <span class="btn-icon">📞</span> +39 334 604 4926
+                <!-- TELEFONO CON ICONA SVG BIANCA -->
+                <a href="#" onclick="handlePhoneClick(event)" class="btn-action animate-in delay-5">
+                    <svg class="svg-icon" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    +39 334 604 4926
                 </a>
-
-                <button onclick="downloadVCard()" class="btn-action btn-vcard animate-in delay-6">
-                    <span class="btn-icon">🎴</span> Salva in Rubrica
-                </button>
             </div>
         </div>
 
         <!-- Dati Aziendali -->
-        <div class="company-info animate-in delay-7">
+        <div class="company-info animate-in delay-6">
             <div class="company-name">Impromart SRL</div>
             Traversa Fossitelli snc &bull; 80147 Napoli<br>
             <span class="piva-text">P.IVA: 04911&#8203;050633</span>
@@ -333,8 +335,10 @@
             }
         }, 2800);
 
-        // Funzione dedicata solo al salvataggio della vCard
-        function downloadVCard() {
+        // Gestione Salva Contatto + Chiamata al tap del numero
+        function handlePhoneClick(e) {
+            e.preventDefault();
+            
             const vcardData = 
 `BEGIN:VCARD
 VERSION:3.0
@@ -355,6 +359,10 @@ END:VCARD`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+
+            setTimeout(() => {
+                window.location.href = "tel:+393346044926";
+            }, 300);
         }
     </script>
 </body>
