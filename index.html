@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- COLORE DELLE BARRE DEL BROWSER -->
-    <meta name="theme-color" content="#1e2732">
+    <!-- FORZA BARRE BROWSER NERE E SCURE SU IPHONE E ANDROID -->
+    <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
@@ -22,9 +22,17 @@
             padding: 0;
         }
 
-        html, body {
+        html {
+            background-color: #000000; /* Assicura che le barre del browser su iPhone/Safari siano NERE */
             width: 100%;
             height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
             background: radial-gradient(circle at center, #3a4b5d 0%, #1e2732 100%);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: #ffffff;
