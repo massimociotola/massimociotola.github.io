@@ -18,7 +18,8 @@
         body, html {
             width: 100%;
             height: 100%;
-            background-color: #2b3846; 
+            /* SFONDO MIGLIORATO: Gradiente dinamico profondo con punto di luce centrale */
+            background: radial-gradient(circle at center, #3a4b5d 0%, #1e2732 100%);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: #ffffff;
             display: flex;
@@ -82,7 +83,7 @@
            BIGLIETTO DA VISITA DIGITALE
         ---------------------------------------------------- */
         .card {
-            width: 100%;
+            width: 90%;
             max-width: 380px;
             padding: 40px 30px;
             display: flex;
@@ -90,6 +91,13 @@
             justify-content: space-between;
             min-height: 85vh;
             box-sizing: border-box;
+            /* MIGLIORAMENTO SFONDO CARD: Effetto scheda elegante e leggero contrasto */
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
         }
 
         /* NOME E COGNOME */
@@ -101,8 +109,8 @@
             text-transform: uppercase;
             color: #ffffff;
             opacity: 0;
-            transform: translateY(25px);
-            filter: blur(8px);
+            transform: translateY(30px);
+            filter: blur(10px);
         }
 
         /* LINEA ROSSA MAN */
@@ -114,6 +122,7 @@
             opacity: 0;
             transform: scaleX(0);
             transform-origin: left;
+            box-shadow: 0 0 12px rgba(230, 0, 0, 0.5); /* Effetto bagliore sulla linea rossa */
         }
 
         /* SEZIONE CONTATTI */
@@ -132,8 +141,8 @@
             letter-spacing: 0.5px;
             display: inline-block;
             opacity: 0;
-            transform: translateY(20px);
-            filter: blur(6px);
+            transform: translateY(25px);
+            filter: blur(8px);
             transition: color 0.3s, transform 0.2s;
             word-break: break-all;
         }
@@ -143,139 +152,27 @@
             transform: scale(0.98);
         }
 
-        /* SEZIONE AZIENDA FOOTER (TESTO SEMPLICE NON CLICCABILE) */
+        /* SEZIONE AZIENDA FOOTER */
         .company-info {
             text-align: center;
             font-size: 0.95rem;
             line-height: 1.5;
-            color: #ffffff;
+            color: rgba(255, 255, 255, 0.85);
             opacity: 0;
-            transform: translateY(20px);
-            filter: blur(6px);
-            user-select: none; /* Impedisce la selezione/click accidentale */
+            transform: translateY(25px);
+            filter: blur(8px);
+            user-select: none;
         }
 
         .company-name {
             font-weight: 800;
             font-size: 1.1rem;
             margin-bottom: 4px;
+            color: #ffffff;
         }
 
         /* ----------------------------------------------------
-           ANIMAZIONI PIÙ LENTE E MORBIDE (1.4 SECONDI)
+           ANIMAZIONI MOLTO PIÙ LENTE E MORBIDE (2.2 SECONDI)
         ---------------------------------------------------- */
         .animate-in {
-            animation: fadeInSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .animate-line {
-            animation: expandLineSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes fadeInSlow {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0);
-            }
-        }
-
-        @keyframes expandLineSlow {
-            to {
-                opacity: 1;
-                transform: scaleX(1);
-            }
-        }
-
-        /* Tempi di attesa scaglionati */
-        .delay-1 { animation-delay: 3.1s; } /* Nome */
-        .delay-2 { animation-delay: 3.5s; } /* Linea Rossa */
-        .delay-3 { animation-delay: 3.9s; } /* Email */
-        .delay-4 { animation-delay: 4.3s; } /* Telefono */
-        .delay-5 { animation-delay: 4.7s; } /* Azienda & P.IVA */
-    </style>
-</head>
-
-<body>
-
-    <!-- 1. INTRO LOGO (3 SECONDI) -->
-    <div id="loader">
-        <img src="logo intro.png" alt="Logo" class="intro-logo-img">
-    </div>
-
-    <!-- 2. CARD DIGITALE -->
-    <div class="card">
-        <div>
-            <!-- Nome e Cognome -->
-            <div class="name-title animate-in delay-1">
-                MASSIMO<br>CIOTOLA
-            </div>
-
-            <!-- Linea Rossa MAN -->
-            <div class="red-line animate-line delay-2"></div>
-
-            <!-- Contatti Cliccabili -->
-            <div class="contact-info">
-                <!-- Email (Apre programma di posta) -->
-                <a href="mailto:massimo.impromart@gmail.com" class="contact-link animate-in delay-3">
-                    massimo.impromart@gmail.com
-                </a>
-
-                <!-- Telefono (Salva in Rubrica + Chiamata) -->
-                <a href="#" onclick="handlePhoneClick(event)" class="contact-link animate-in delay-4">
-                    +39 334 604 4926
-                </a>
-            </div>
-        </div>
-
-        <!-- Dati Aziendali (Testo Statico Non Cliccabile) -->
-        <div class="company-info animate-in delay-5">
-            <div class="company-name">Impromart SRL</div>
-            Traversa Fossitelli snc<br>
-            80147 - Napoli<br>
-            04911050633
-        </div>
-    </div>
-
-    <script>
-        // Nasconde l'intro dopo 3 secondi
-        setTimeout(() => {
-            const loader = document.getElementById("loader");
-            if (loader) loader.classList.add("exit");
-        }, 3000);
-
-        // Quando si tocca il numero di telefono:
-        // 1. Scarica la scheda contatto per la rubrica (.vcf)
-        // 2. Avvia la chiamata telefonica
-        function handlePhoneClick(e) {
-            e.preventDefault();
-            
-            const vcardData = 
-`BEGIN:VCARD
-VERSION:3.0
-N:Ciotola;Massimo;;;
-FN:Massimo Ciotola
-ORG:Impromart SRL
-TITLE:Venditore Camion & Veicoli Industriali
-TEL;TYPE=CELL:+393346044926
-EMAIL;TYPE=WORK:massimo.impromart@gmail.com
-ADR;TYPE=WORK:;;Traversa Fossitelli snc;Napoli;;80147;Italy
-END:VCARD`;
-
-            const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.setAttribute('download', 'Massimo_Ciotola_MAN.vcf');
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-
-            // Avvia la chiamata dopo un brevissimo istante dal download
-            setTimeout(() => {
-                window.location.href = "tel:+393346044926";
-            }, 300);
-        }
-    </script>
-</body>
-</html>
+            animation: fadeInUltraSlow 2.2s
