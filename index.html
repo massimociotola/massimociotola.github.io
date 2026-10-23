@@ -4,8 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- COLORE DELLE BARRE DEL BROWSER (NERO) -->
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
     <!-- IMPEDISCE AD IPHONE DI TRASFORMARE I NUMERI IN LINK BLU -->
     <meta name="format-detection" content="telephone=no">
+    
     <title>Massimo Ciotola - MAN</title>
     <!-- Font moderno e pulito -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -25,7 +32,7 @@
             height: 100%;
             min-height: 100vh;
             min-height: 100dvh;
-            background: radial-gradient(circle at center, #3a4b5d 0%, #1e2732 100%);
+            background: #000000; /* Fondo base nero per le zone di sicurezza/barre */
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: #ffffff;
             display: flex;
@@ -33,6 +40,19 @@
             align-items: center;
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sfondo a gradiente applicato al contenitore prinicipale */
+        .page-wrapper {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background: radial-gradient(circle at center, #3a4b5d 0%, #1e2732 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         /* ----------------------------------------------------
@@ -89,7 +109,7 @@
         }
 
         /* ----------------------------------------------------
-           BIGLIETTO DA VISITA DIGITALE
+           BIGLIETTO DA VISITA DIGITALE (CARD)
         ---------------------------------------------------- */
         .card {
             width: 90%;
@@ -107,6 +127,14 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeInCard 1.5s cubic-bezier(0.1, 1, 0.2, 1) 2.8s forwards;
+        }
+
+        @keyframes fadeInCard {
+            to {
+                opacity: 1;
+            }
         }
 
         /* NOME E COGNOME */
@@ -180,14 +208,17 @@
             color: #ffffff;
         }
 
-        /* FORZATURA BIANCO E RIMOZIONE EVENTUALI LINK IPHONE SULLA P.IVA */
-        .piva-text, .piva-text a {
+        /* BLOCCO LINK E COLORI IPHONE SULLA PARTITA IVA */
+        .piva-text, 
+        .piva-text a {
             color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
             text-decoration: none !important;
-            pointer-events: none !important; /* Blocca il tocco/click su iPhone */
+            pointer-events: none !important;
             font-weight: 500;
             display: block;
             margin-top: 2px;
+            user-select: none;
         }
 
         /* ----------------------------------------------------
@@ -225,109 +256,4 @@
             }
         }
 
-        /* RITARDI DILAZIONATI: Il nome appare dopo che lo sfondo si è rivelato */
-        .delay-1 { animation-delay: 4.2s; } /* Nome (apparizione successiva allo sfondo) */
-        .delay-2 { animation-delay: 5.0s; } /* Linea Rossa */
-        .delay-3 { animation-delay: 5.8s; } /* Email */
-        .delay-4 { animation-delay: 6.6s; } /* Telefono */
-        .delay-5 { animation-delay: 7.4s; } /* Azienda & P.IVA */
-    </style>
-</head>
-
-<body>
-
-    <!-- 1. INTRO LOGO -->
-    <div id="loader">
-        <img src="logo intro.png" alt="Logo" class="intro-logo-img">
-    </div>
-
-    <!-- 2. CARD DIGITALE -->
-    <div class="card">
-        <div>
-            <!-- Nome e Cognome -->
-            <div class="name-title animate-in delay-1">
-                MASSIMO<br>CIOTOLA
-            </div>
-
-            <!-- Linea Rossa MAN -->
-            <div class="red-line animate-line delay-2"></div>
-
-            <!-- Contatti Cliccabili -->
-            <div class="contact-info">
-                <!-- Email -->
-                <a href="mailto:massimo.impromart@gmail.com" class="contact-link animate-in delay-3">
-                    massimo.impromart@gmail.com
-                </a>
-
-                <!-- Telefono -->
-                <a href="#" onclick="handlePhoneClick(event)" class="contact-link animate-in delay-4">
-                    +39 334 604 4926
-                </a>
-            </div>
-        </div>
-
-        <!-- Dati Aziendali -->
-        <div class="company-info animate-in delay-5">
-            <div class="company-name">Impromart SRL</div>
-            Traversa Fossitelli snc<br>
-            80147 - Napoli<br>
-            <span class="piva-text">04911050633</span>
-        </div>
-    </div>
-
-    <script>
-        // Gestione chiusura intro
-        setTimeout(() => {
-            const loader = document.getElementById("loader");
-            if (loader) {
-                loader.classList.add("hidden");
-                setTimeout(() => loader.style.display = 'none', 1200);
-            }
-        }, 2800);
-
-        // Attivazione automatica Schermo Intero al primo tocco dell'utente
-        function requestFullScreen() {
-            const doc = document.documentElement;
-            if (doc.requestFullscreen) {
-                doc.requestFullscreen().catch(() => {});
-            } else if (doc.webkitRequestFullscreen) {
-                doc.webkitRequestFullscreen();
-            } else if (doc.msRequestFullscreen) {
-                doc.msRequestFullscreen();
-            }
-        }
-        document.addEventListener('click', requestFullScreen, { once: true });
-        document.addEventListener('touchstart', requestFullScreen, { once: true });
-
-        // Gestione Click Telefono: Scarica vCard e chiama
-        function handlePhoneClick(e) {
-            e.preventDefault();
-            
-            const vcardData = 
-`BEGIN:VCARD
-VERSION:3.0
-N:Ciotola;Massimo;;;
-FN:Massimo Ciotola
-ORG:Impromart SRL
-TITLE:Venditore Camion & Veicoli Industriali
-TEL;TYPE=CELL:+393346044926
-EMAIL;TYPE=WORK:massimo.impromart@gmail.com
-ADR;TYPE=WORK:;;Traversa Fossitelli snc;Napoli;;80147;Italy
-END:VCARD`;
-
-            const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.setAttribute('download', 'Massimo_Ciotola_MAN.vcf');
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-
-            setTimeout(() => {
-                window.location.href = "tel:+393346044926";
-            }, 300);
-        }
-    </script>
-</body>
-</html>
+        /* RITARDI
